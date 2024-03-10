@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"fmt"
+	//"fmt"
 	"net/http"
 )
 
@@ -19,10 +19,9 @@ func MapHandler(pathsToUrls map[string]string, fallback http.Handler) http.Handl
 			http.Redirect(w, r, url, http.StatusFound)
 			return
 		}
-		
-	
 
-	//return nil
+		//return nil
+	}
 }
 
 // YAMLHandler will parse the provided YAML and then return
