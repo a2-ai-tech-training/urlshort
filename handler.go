@@ -1,4 +1,4 @@
-package urlshort
+package urlshrt
 
 import (
 	"fmt"
