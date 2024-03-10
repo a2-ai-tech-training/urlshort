@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/a2-ai-tech-training/urlshort"
+	"github.com/a2-ai-tech-training/urlshort/handlers"
 	"net/http"
 )
 
@@ -14,7 +14,7 @@ func main() {
 		"/urlshort-godoc": "https://godoc.org/github.com/gophercises/urlshort",
 		"/yaml-godoc":     "https://godoc.org/gopkg.in/yaml.v2",
 	}
-	mapHandler := urlshrt.MapHandler(pathsToUrls, mux)
+	mapHandler := handlers.MapHandler(pathsToUrls, mux)
 
 	// Build the YAMLHandler using the mapHandler as the
 	// fallback
@@ -24,7 +24,7 @@ func main() {
 - path: /urlshort-final
   url: https://github.com/gophercises/urlshort/tree/solution
 `
-	yamlHandler, err := urlshrt.YAMLHandler([]byte(yaml), mapHandler)
+	yamlHandler, err := handlers.YAMLHandler([]byte(yaml), mapHandler)
 	if err != nil {
 		panic(err)
 	}

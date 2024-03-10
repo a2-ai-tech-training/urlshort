@@ -1,4 +1,4 @@
-package urlshrt
+package handlers
 
 import (
 	"fmt"
