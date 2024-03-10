@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	//"github.com/a2-ai-tech-training/urlshort"
+	//"github.com/a2-ai-tech-training/urlshort/controllers"
 	"net/http"
 )
 
