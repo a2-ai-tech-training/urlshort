@@ -10,7 +10,7 @@ func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
-	fmt.Println("Map Read")
+	fmt.Println("Map Read:\n")
 	pathsToUrls := map[string]string{
 		"/urlshort-godoc": "https://godoc.org/github.com/gophercises/urlshort",
 		"/yaml-godoc":     "https://godoc.org/gopkg.in/yaml.v2",
@@ -22,6 +22,7 @@ func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
+	fmt.Println("JSON as Map Read:\n")
 	// Sample JSON {"name":"John", "age":30, "car":null}
 	data := `{"name":"John", "age":30, "car":null}`
 	var m map[string]interface{}
@@ -32,6 +33,7 @@ func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
+	fmt.Println("YAML Unmarshal: \n")
 
 	// type Pair struct {
 	// 	Key   string
@@ -60,23 +62,25 @@ func main() {
 	// var o Order
 
 	yml := `
-	- path: /urlshort
-	  url: https://github.com/gophercises/urlshort
-	- path: /urlshort-final
-	  url: https://github.com/gophercises/urlshort/tree/solution
-	`
+    - path: /urlshort
+      url: https://github.com/gophercises/urlshort
+    - path: /urlshort-final
+      url: https://github.com/gophercises/urlshort/tree/solution
+    `
 	byml := []byte(yml)
 	type Hodl struct {
 		Path string `yaml:"path"`
 		Url  string `yaml:"url"`
 	}
-	type Hodler map[string][]Hodl
+	//type Hodler map[string][]Hodl
 
-	var h Hodler
+	var h Hodl //er
 	err := yaml.Unmarshal(byml, &h)
 	if err == nil {
 		fmt.Println("we did it fam")
 		fmt.Println(h)
+	} else {
+		fmt.Println(err)
 	}
 
 	// yamlHandler, err := handlers.YAMLHandler([]byte(yaml), mapHandler)
@@ -85,8 +89,11 @@ func main() {
 	// }
 	// func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 
-	// for _, value := range yaml {
-	// 	fmt.Printf(string(value))
-	// }
+	fmt.Println("=====")
+	fmt.Println("=====")
+	fmt.Println("JSON byte array read/print:\n")
+	for _, value := range yml {
+		fmt.Printf(string(value))
+	}
 
 }
