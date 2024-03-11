@@ -10,7 +10,8 @@ func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
-	fmt.Println("Map Read:\n")
+	fmt.Println("Map Read:")
+	fmt.Println()
 	pathsToUrls := map[string]string{
 		"/urlshort-godoc": "https://godoc.org/github.com/gophercises/urlshort",
 		"/yaml-godoc":     "https://godoc.org/gopkg.in/yaml.v2",
@@ -22,7 +23,8 @@ func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
-	fmt.Println("JSON as Map Read:\n")
+	fmt.Println("JSON as Map Read:")
+	fmt.Println()
 	// Sample JSON {"name":"John", "age":30, "car":null}
 	data := `{"name":"John", "age":30, "car":null}`
 	var m map[string]interface{}
@@ -33,7 +35,8 @@ func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
-	fmt.Println("YAML Unmarshal: \n")
+	fmt.Println("YAML Unmarshal:")
+	fmt.Println()
 
 	// type Pair struct {
 	// 	Key   string
@@ -80,7 +83,10 @@ func main() {
 		fmt.Println("we did it fam")
 		fmt.Println(h)
 		fmt.Println("=====")
-		fmt.Println(h[1].Url)
+		for path, _ := range h {
+			fmt.Println(h[path].Url)
+		}
+		//fmt.Println(h[1].Url)
 	} else {
 		fmt.Println(err)
 	}
@@ -93,9 +99,10 @@ func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
-	fmt.Println("YAML as byte array read/print:\n")
+	fmt.Println("YAML as byte array read/print:")
+	fmt.Println()
 	for _, value := range yml {
-		fmt.Printf(string(value))
+		fmt.Printf("%s", string(value))
 	}
 
 }

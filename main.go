@@ -32,7 +32,7 @@ func main() {
 		fmt.Println("OMG")
 	}
 	fmt.Println("Starting the server on :8080")
-	http.ListenAndServe(":8080", mapHandler)
+	http.ListenAndServe(":8080", yamlHandler)
 
 }
 

@@ -47,36 +47,75 @@ func MapHandler(pathsToUrls map[string]string, fallback http.Handler) http.Handl
 //
 // See MapHandler to create a similar http.HandlerFunc via
 // a mapping of paths to urls.
-func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 
-	type Hodl struct {
-		Path string `yaml:"path"`
-		Url  string `yaml:"url"`
-	}
-	type Hodler []Hodl
-	var h Hodler
-	// TODO: Implement this...
-	// TODO: Check out yaml unmarshalling
-	err := yaml.Unmarshal([]byte(yml), &h)
-	if err != nil {
-		fmt.Printf("yaml Unmarshal failed, %s", err)
-	}
-
-	for path, _ := range h {
-		// if _ == _ {
-		// 	fmt.Println("Something went wrong. _ = 123")
-		// }
-		if h[path].Url == "" {
-			return nil, nil
-		} else {
-			return nil, nil
-			// return func(w http.ResponseWriter, r *http.Request), nil {
-			// 	http.Redirect(w, r, url, http.StatusFound), nil,
-			// }
-		}
-	}
-	return nil, nil
+type Hodl struct {
+	Path string `yaml:"path"`
+	Url  string `yaml:"url"`
 }
+
+type Hodler []Hodl
+
+func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var h Hodler
+		err := yaml.Unmarshal([]byte(yml), &h)
+		if err != nil {
+			fmt.Errorf("yaml unmarshal error %w", err)
+			return
+		}
+
+		//return w, r h[path].Url
+		for path, _ := range h {
+			//fmt.Fprint(w, "hi its me")
+			// if r.URL.Path == h[path].Path {
+			// 	r.URL.Path = h[path].Url
+			// }
+			http.Redirect(w, r, h[path].Url, http.StatusFound)
+			return
+		}
+	}, nil
+}
+
+// 		// url := h[Path].Url{
+// 		// 	http.Redirect(w, r, url, http.StatusFound),
+// 		// 	//return url
+// 		// }
+// 		// return fallback.ServeHTTP(w, r)
+// 	}, nil
+// }
+
+// func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
+
+// 	var h Hodler
+// 	// TODO: Implement this...
+// 	// TODO: Check out yaml unmarshalling
+// 	err := yaml.Unmarshal([]byte(yml), &h)
+// 	if err != nil {
+// 		fmt.Printf("yaml Unmarshal failed, %s", err)
+// 	}
+
+// 	for path, _ := range h {
+// 		// if _ == _ {
+// 		// 	fmt.Println("Something went wrong. _ = 123")
+// 		// }
+// 		if h[path].Url == "" {
+// 			return nil, nil
+// 		} else {
+// 			return func(w http.ResponseWriter, r *http.Request), nil{http.Redirect(w, r, url, http.StatusFound), nil}
+// 		}
+// 	}
+// 	//return hello2, nil
+// }
+
+// func hello0(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Fprintln(w, "Placeholder 0 read")
+// }
+// func hello1(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Fprintln(w, "Placeholder 1 read")
+// }
+// func hello2(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Fprintln(w, "Placeholder 2 read")
+// }
 
 // 		return func(w http.ResponseWriter, r *http.Request), nil {
 // 			http.Redirect(w, r, url, http.StatusFound), nil,
