@@ -3,6 +3,8 @@ package handlers
 import (
 	//"fmt"
 	"net/http"
+
+	"gopkg.in/yaml.v3"
 )
 
 // MapHandler will return an http.HandlerFunc (which also
@@ -13,11 +15,15 @@ import (
 // http.Handler will be called instead.
 func MapHandler(pathsToUrls map[string]string, fallback http.Handler) http.HandlerFunc {
 	//	TODO: Implement this...
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
+
 		if url, ok := pathsToUrls[path]; ok {
 			http.Redirect(w, r, url, http.StatusFound)
 			return
+		} else {
+			fallback.ServeHTTP(w, r)
 		}
 
 		//return nil
@@ -41,6 +47,23 @@ func MapHandler(pathsToUrls map[string]string, fallback http.Handler) http.Handl
 // See MapHandler to create a similar http.HandlerFunc via
 // a mapping of paths to urls.
 func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
+
+	type Hodl struct{
+		Path string `yaml:"path"`
+		Url string `yaml:"url"`
+	}
+	
+	var hodler Hodl
 	// TODO: Implement this...
-	return nil, nil
+	// TODO: Check out yaml unmarshalling
+	err := yaml.Unmarshal([]byte(yml), &hodler)
+	if err != nil {
+		return nil, err
+	}
+	// path := hodler.Path
+	// url := hodler.Url
+	
+	return func(w http.ResponseWriter, r *http.Request) {
+		if hodler.Path )
+	//return nil, nil
 }
