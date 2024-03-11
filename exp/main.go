@@ -72,9 +72,9 @@ func main() {
 		Path string `yaml:"path"`
 		Url  string `yaml:"url"`
 	}
-	//type Hodler map[string][]Hodl
+	type Hodler []Hodl
 
-	var h Hodl //er
+	var h Hodler
 	err := yaml.Unmarshal(byml, &h)
 	if err == nil {
 		fmt.Println("we did it fam")
@@ -91,7 +91,7 @@ func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
-	fmt.Println("JSON byte array read/print:\n")
+	fmt.Println("YAML as byte array read/print:\n")
 	for _, value := range yml {
 		fmt.Printf(string(value))
 	}
