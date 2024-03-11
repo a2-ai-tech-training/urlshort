@@ -3,13 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	//"gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
 
 	fmt.Println("=====")
 	fmt.Println("=====")
+	fmt.Println("Map Read")
 	pathsToUrls := map[string]string{
 		"/urlshort-godoc": "https://godoc.org/github.com/gophercises/urlshort",
 		"/yaml-godoc":     "https://godoc.org/gopkg.in/yaml.v2",
@@ -58,25 +59,34 @@ func main() {
 	// 	CustomerName
 	// var o Order
 
-	yaml := `
+	yml := `
 	- path: /urlshort
 	  url: https://github.com/gophercises/urlshort
 	- path: /urlshort-final
 	  url: https://github.com/gophercises/urlshort/tree/solution
 	`
+	byml := []byte(yml)
+	type Hodl struct {
+		Path string `yaml:"path"`
+		Url  string `yaml:"url"`
+	}
+	type Hodler map[string][]Hodl
+
+	var h Hodler
+	err := yaml.Unmarshal(byml, &h)
+	if err == nil {
+		fmt.Println("we did it fam")
+		fmt.Println(h)
+	}
+
 	// yamlHandler, err := handlers.YAMLHandler([]byte(yaml), mapHandler)
 	// if err != nil {
 	// 	panic(err)
 	// }
 	// func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 
-	// type Hodl struct{
-	// 	Path string `yaml:"path"`
-	// 	Url string `yaml:"url"`
+	// for _, value := range yaml {
+	// 	fmt.Printf(string(value))
 	// }
-
-	for _, value := range yaml {
-		fmt.Printf(string(value))
-	}
 
 }
