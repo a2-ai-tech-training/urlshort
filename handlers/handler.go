@@ -64,6 +64,7 @@ func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 			fmt.Errorf("yaml unmarshal error %w", err)
 			return
 		}
+		fmt.Printf("YAML Handler serving path: %s\n", r.URL.Path)
 		// if r.URL.Path != h[*].Path {
 		// 	return
 		// }
@@ -78,15 +79,16 @@ func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 			// } else {
 			// 	return
 			// }
-			fmt.Printf("YAML Handler serving path: %s\n", r.URL.Path)
-			fmt.Printf("YAML Read %s\n", h[path].Path)
-			fmt.Printf("YAML Redirect URL: %s\n", h[path].Url)
+
+			//fmt.Printf("YAML Read %s\n", h[path].Path)
+			//fmt.Printf("YAML Redirect URL: %s\n", h[path].Url)
 			//http.Redirect(w, r, h[path].Url, http.StatusFound)
-			if r.URL.Path == h[path].Path {
+			if h[path].Path == r.URL.Path {
+				fmt.Printf("Redirecting to %s\n", h[path].Url)
 				http.Redirect(w, r, h[path].Url, http.StatusFound)
 				return
 			}
-			return
+			continue
 		}
 	}, nil
 }
