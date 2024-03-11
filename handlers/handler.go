@@ -78,7 +78,7 @@ func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 			// } else {
 			// 	return
 			// }
-			fmt.Printf("YAML Handler serving path: %s", r.URL.Path)
+			fmt.Printf("YAML Handler serving path: %s\n", r.URL.Path)
 			fmt.Printf("YAML Read %s\n", h[path].Path)
 			fmt.Printf("YAML Redirect URL: %s\n", h[path].Url)
 			//http.Redirect(w, r, h[path].Url, http.StatusFound)
