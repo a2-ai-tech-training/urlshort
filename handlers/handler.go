@@ -90,6 +90,7 @@ func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 			}
 			continue
 		}
+		fallback.ServeHTTP(w, r)
 	}, nil
 }
 
