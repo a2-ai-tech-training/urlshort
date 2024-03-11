@@ -16,7 +16,7 @@ import (
 // http.Handler will be called instead.
 func MapHandler(pathsToUrls map[string]string, fallback http.Handler) http.HandlerFunc {
 	//	TODO: Implement this...
-
+	fmt.Println("MapHandler called")
 	return func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 
@@ -56,6 +56,7 @@ type Hodl struct {
 type Hodler []Hodl
 
 func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
+	fmt.Println("YAMLHandler called")
 	return func(w http.ResponseWriter, r *http.Request) {
 		var h Hodler
 		err := yaml.Unmarshal([]byte(yml), &h)
@@ -63,14 +64,28 @@ func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 			fmt.Errorf("yaml unmarshal error %w", err)
 			return
 		}
-
+		// if r.URL.Path != h[*].Path {
+		// 	return
+		// }
 		//return w, r h[path].Url
-		for path, _ := range h {
+		for path := range h {
 			//fmt.Fprint(w, "hi its me")
 			// if r.URL.Path == h[path].Path {
-			// 	r.URL.Path = h[path].Url
+			// 	//r.URL.Path = h[path].Url
+			// 	fmt.Fprintf(os.Stdout, "r path before: %s", r.URL.Path)
+			// 	fmt.Fprintf(os.Stdout, "r path after: %s", h[path].Url)
+			// 	http.Redirect(w, r, h[path].Url, http.StatusFound)
+			// } else {
+			// 	return
 			// }
-			http.Redirect(w, r, h[path].Url, http.StatusFound)
+			fmt.Printf("YAML Handler serving path: %s", r.URL.Path)
+			fmt.Printf("YAML Read %s\n", h[path].Path)
+			fmt.Printf("YAML Redirect URL: %s\n", h[path].Url)
+			//http.Redirect(w, r, h[path].Url, http.StatusFound)
+			if r.URL.Path == h[path].Path {
+				http.Redirect(w, r, h[path].Url, http.StatusFound)
+				return
+			}
 			return
 		}
 	}, nil
