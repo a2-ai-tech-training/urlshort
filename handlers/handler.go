@@ -2,6 +2,7 @@ package handlers
 
 import (
 	//"fmt"
+	"fmt"
 	"net/http"
 
 	"gopkg.in/yaml.v3"
@@ -48,22 +49,53 @@ func MapHandler(pathsToUrls map[string]string, fallback http.Handler) http.Handl
 // a mapping of paths to urls.
 func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
 
-	type Hodl struct{
+	type Hodl struct {
 		Path string `yaml:"path"`
-		Url string `yaml:"url"`
+		Url  string `yaml:"url"`
 	}
-	
-	var hodler Hodl
+	type Hodler []Hodl
+	var h Hodler
 	// TODO: Implement this...
 	// TODO: Check out yaml unmarshalling
-	err := yaml.Unmarshal([]byte(yml), &hodler)
+	err := yaml.Unmarshal([]byte(yml), &h)
 	if err != nil {
-		return nil, err
+		fmt.Printf("yaml Unmarshal failed, %s", err)
 	}
-	// path := hodler.Path
-	// url := hodler.Url
-	
-	return func(w http.ResponseWriter, r *http.Request) {
-		if hodler.Path )
-	//return nil, nil
+
+	for path, _ := range h {
+		// if _ == _ {
+		// 	fmt.Println("Something went wrong. _ = 123")
+		// }
+		if h[path].Url == "" {
+			return nil, nil
+		} else {
+			return nil, nil
+			// return func(w http.ResponseWriter, r *http.Request), nil {
+			// 	http.Redirect(w, r, url, http.StatusFound), nil,
+			// }
+		}
+	}
+	return nil, nil
 }
+
+// 		return func(w http.ResponseWriter, r *http.Request), nil {
+// 			http.Redirect(w, r, url, http.StatusFound), nil,
+// 		}
+// 		} else {
+// 	return nil, nil
+// 	}
+// }
+// return func(w http.ResponseWriter, r *http.Request), nil {
+
+// 	// path := r.URL.Path
+// 	for path, url in range h {
+
+// 	}
+// 	url, ok := h[].URL: ok {
+// 		http.Redirect(w, r, url, http.StatusFound), nil
+// 		return
+// 	} else {
+// 		fallback.ServeHTTP(w, r)
+// 	}
+// }
+// return nil, nil

@@ -79,6 +79,8 @@ func main() {
 	if err == nil {
 		fmt.Println("we did it fam")
 		fmt.Println(h)
+		fmt.Println("=====")
+		fmt.Println(h[1].Url)
 	} else {
 		fmt.Println(err)
 	}
